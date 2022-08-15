@@ -10,25 +10,25 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import javafx.scene.control.ProgressBar;
-
-public class HVSort extends Sort implements Runnable{
+public class DimensionalSort extends Sort implements Runnable {
 	
 	
-	
-	HVSort(List<File> files,String path){
-		super(files,path);
-		
+	DimensionalSort(List<File> files,String path){
+		super(files, path);
 	}
 	
 	@Override
 	public void run() {
+		//List<int[]> dimensions =new ArrayList<int[]>();
 		for(File file:super.getFiles()) {
 			try {
 				BufferedImage image=ImageIO.read(file);
 				final int width=image.getWidth();
 				final int height=image.getHeight();
-				if(width>height) {
+				new File(super.getPath()+"//"+width+" X "+height).mkdirs();
+				File dir=new File(super.getPath()+"//"+width+" X "+height);
+				Files.copy(file.toPath(), (new File(dir.getPath()+'\\'+file.getName())).toPath(), StandardCopyOption.REPLACE_EXISTING);
+				/*if(width>height) {
 					new File(super.getPath()+"//wide_images").mkdirs();
 					File wideDir=new File(super.getPath()+"//wide_images");
 					Files.copy(file.toPath(), (new File(wideDir.getPath()+'\\'+file.getName())).toPath(), StandardCopyOption.REPLACE_EXISTING);
@@ -41,14 +41,15 @@ public class HVSort extends Sort implements Runnable{
 					new File(super.getPath()+"//square_images").mkdirs();
 					File squareDir=new File(super.getPath()+"//square_images");
 					Files.copy(file.toPath(), (new File(squareDir.getPath()+'\\'+file.getName())).toPath(), StandardCopyOption.REPLACE_EXISTING);
-				}
+				}*/
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				
 			}
 		}
+			
 		
-	}
 	
+	}
 }
