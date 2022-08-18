@@ -2,7 +2,7 @@
 
 # Sorter
 
-A simple program that sort your images based on dimensions. Personal project. ( In progress ) 
+A simple program that sorts your images based on dimensions. Personal project. ( In progress )
 
 # What is Sorter? 
 
