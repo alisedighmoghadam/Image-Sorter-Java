@@ -1,17 +1,64 @@
 <!-- Java -->
 
-# Sorter
+# Sorter – Image Sorter
 
-A simple program that sorts your images based on dimensions. Personal project. ( In progress )
+A JavaFX desktop app that organises a folder of photos by their dimensions, either into **wide / portrait / square** folders or into one folder per exact resolution.
 
-# What is Sorter? 
+> **Project status: not completed.** Both sorting modes work, but the app was left as a beta: it only handles JPEG files and was never packaged as a release.
 
-Have you ever thought about how I can sort my images based on their dimensions? 
-For example, you downloaded very cool wallpapers for your PC and mobile phone, but they got mixed up, and you need to separate portrait and wide photos manually. I personally faced this problem a lot becuase\n 
-I always like to have fresh background pictures for my laptop and phone, and when I download a bunch of photos from [Unsplash](www.unsplash.com) , I need to sort them manually by dimensions so I can import photos to my phone. 
-This application can be used in other situations as well. For example you came back from a long photoshoot from your product, and now you want to use the photos for your [Instagram](www.instagram.com) posts and stories, but you need to take a lot of time to sort them based on their dimensions. 
+![Java](https://img.shields.io/badge/Java-17-ED8B00?logo=openjdk&logoColor=white)
+![JavaFX](https://img.shields.io/badge/JavaFX-17-007396)
 
-# Screenshots
+![Screenshot 1](https://github.com/alisedighmoghadam/Image-Sorter-Java/blob/main/screenshots/1.png?raw=true)
+![Screenshot 2](https://github.com/alisedighmoghadam/Image-Sorter-Java/blob/main/screenshots/2.png?raw=true)
 
-![Screenshot1](https://github.com/alisedighmoghadam/Image-Sorter-Java/blob/main/screenshots/1.png?raw=true)
-![Screenshot2](https://github.com/alisedighmoghadam/Image-Sorter-Java/blob/main/screenshots/2.png?raw=true)
+## Why
+
+When you download a batch of wallpapers (for example from Unsplash) for both a laptop and a phone, portrait and landscape images end up mixed together. The same happens after a product photoshoot when you need square shots for posts and tall shots for stories. Sorting them by hand is slow, so Sorter does it for you.
+
+## Features
+
+- **Two sorting modes**
+  - *Horizontal & vertical sort* – copies each image into `wide_images/`, `portrait_images/` or `square_images/`.
+  - *Dimensional sort* – creates one folder per resolution, e.g. `1920 X 1080/`.
+- **Multithreaded** – files are split into batches of 100 and processed in parallel with a fixed thread pool, keeping the UI responsive.
+- **Safe by default** – images are copied, not moved. After sorting, you can choose to send the originals to the Recycle Bin / Trash.
+- **Input validation** – clear error dialogs for invalid paths and folders with no supported images.
+- Supported formats: JPEG / JPG.
+
+## Tech stack
+
+Java 17 · JavaFX 17 · `ImageIO` · `java.util.concurrent` (ExecutorService)
+
+## Getting started
+
+### Requirements
+
+- JDK 17+
+- [JavaFX SDK 17](https://openjfx.io/)
+
+### Run in Eclipse (project files included)
+
+1. **File → Import → Existing Projects into Workspace** and select this folder.
+2. Add the JavaFX SDK as a user library named `FX17` (or update the build path).
+3. Run `application.SorterUI`.
+
+### Run from the command line
+
+```bash
+PATH_TO_FX=/path/to/javafx-sdk-17/lib
+javac --module-path "$PATH_TO_FX" -d out $(find src -name "*.java")
+cp src/application/application.css out/application/
+java --module-path "$PATH_TO_FX:out" -m Sorter/application.SorterUI
+```
+
+## Usage
+
+1. Enter the path of the folder that contains your images and click **Next**.
+2. Pick *Horizontal and vertical sort* or *Dimensional sort* and click **Sort**.
+3. When it finishes, choose whether to delete the unsorted originals.
+
+## Known limitations
+
+- Very large folders can use a lot of memory because every image is fully decoded to read its size.
+- JPEG / JPG only.
